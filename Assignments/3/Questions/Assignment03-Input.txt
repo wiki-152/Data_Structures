@@ -1,0 +1,117 @@
+Input:
+/PatientsData
+/Logs
+/PatientsData PatientsHome
+/PatientsData PatientsList.txt
+/PatientsData PatientsHome patientA ReportA.pdf
+/PatientsData PatientsHome patientA patientB ReportB.pdf
+/Logs LogsHome LogReport.pdf
+/Logs LogsHome Jan JLog.txt
+/Logs LogsHome Jan Feb FLog.txt
+
+Insert
+Input: reportC.pdf
+path?: /PatientsData PatientsHome
+
+Output: /PatientsData PatientsHome patientA patientB patientC reportC.pdf
+
+Input: reportB.pdf
+path?: /PatientsData PatientsHome
+Output: Cannot add duplicate. File already exists
+
+Input: reportD.pdf
+path?: /PatientsData PatientsHome patientA
+Output: Directory is full. Either select main directory (/PatientsData PatientsHome) or an empty directory.
+
+Serach 
+Input: ReportB
+Output: /PatientsData PatientsHome patientA patientB ReportB.pdf
+
+Delete
+Input: ReportB
+Output:
+/PatientsData
+/Logs
+/PatientsData PatientsHome
+/PatientsData PatientsList.txt
+/PatientsData PatientsHome patientA ReportA.pdf
+/PatientsData PatientsHome patientA patientB 
+/Logs LogsHome LogReport.pdf
+/Logs LogsHome Jan JLog.txt
+/Logs LogsHome Feb FLog.txt
+
+
+Input: patitentB
+Output: Cannot remove non-epmty directory.
+cascade delete file?
+/PatientsData
+/Logs
+/PatientsData PatientsHome
+/PatientsData PatientsList.txt
+/PatientsData PatientsHome patientA ReportA.pdf
+/Logs LogsHome LogReport.pdf
+/Logs LogsHome Jan JLog.txt
+/Logs LogsHome Jan Feb FLog.txt
+
+Input: patitentA
+Output: Cannot remove non-epmty directory.
+cascade delete file?
+/PatientsData
+/Logs
+/PatientsData PatientsHome
+/PatientsData PatientsList.txt
+/PatientsData PatientsHome patientB ReportB.pdf
+/Logs LogsHome LogReport.pdf
+/Logs LogsHome Jan JLog.txt
+/Logs LogsHome Jan Feb FLog.txt
+
+Merge
+Input: Source patientA, Destination patientB
+Output:
+Destination folder is Full. 
+1. Replace
+2. Abort
+
+Replace:
+/PatientsData
+/Logs
+/PatientsData PatientsHome
+/PatientsData PatientsList.txt
+/PatientsData PatientsHome patientA 
+/PatientsData PatientsHome patientA patientB ReportA.pdf
+/Logs LogsHome LogReport.pdf
+/Logs LogsHome Jan JLog.txt
+/Logs LogsHome Feb FLog.txt
+
+3. Rname destination to: ---- patientAlpha
+/PatientsData
+/Logs
+/PatientsData PatientsHome
+/PatientsData PatientsList.txt
+/PatientsData PatientsHome patientA 
+/PatientsData PatientsHome patientA patientAlpha ReportA.pdf
+/Logs LogsHome LogReport.pdf
+/Logs LogsHome Jan JLog.txt
+/Logs LogsHome Feb FLog.txt
+
+4. Remove empty director patientA? Yes
+/PatientsData
+/Logs
+/PatientsData PatientsHome
+/PatientsData PatientsList.txt
+/PatientsData PatientsHome patientAlpha ReportA.pdf
+/Logs LogsHome LogReport.pdf
+/Logs LogsHome Jan JLog.txt
+/Logs LogsHome Feb FLog.txt
+
+copy similar to Merge
+
+
+Level Order Output:
+/
+PatientsData Logs
+PatientsHome LogsHome
+LogReport.pdf PatientsList.txt
+patientA Jan
+ReportA.pdf patientB JLog.txt Feb
+ReportB.pdf Flog.txt 
